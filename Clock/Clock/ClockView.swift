@@ -39,7 +39,7 @@ class ClockView: UIView {
         }
     }
     
-    private var seconds = Hand(width: 1.0, length: 2.4, color: .red, value: 0)
+    private var seconds = Hand(width: 1.8, length: 2.4, color: .red, value: 0)
     private var minutes = Hand(width: 3.0, length: 3.2, color: .white, value: 0)
     private var hours = Hand(width: 4.0, length: 4.6, color: .white, value: 0)
     
@@ -158,13 +158,35 @@ class ClockView: UIView {
 			context.strokePath()
 
             // hour/minute's center
+			let largeDotRadius: CGFloat = 6
+			let centerCircle = CGRect(x: clockCenter.x - largeDotRadius,
+									  y: clockCenter.y - largeDotRadius,
+									  width: largeDotRadius * 2,
+									  height: largeDotRadius * 2)
 
+			context.addEllipse(in: centerCircle)
+			context.setFillColor(hours.color.cgColor)
+			context.fillPath()
 
             // second hand
+			context.beginPath()
+			context.move(to: clockCenter)
+			context.addLine(to: secondHandEndPoint)
 
+			context.setStrokeColor(seconds.color.cgColor)
+			context.setLineWidth(seconds.width)
+			context.strokePath()
 
             // second's center
-            
+			let smallDotRadius: CGFloat = 3.5
+			let centerSmolCircle = CGRect(x: clockCenter.x - smallDotRadius,
+										  y: clockCenter.y - smallDotRadius,
+										  width: smallDotRadius * 2,
+										  height: smallDotRadius * 2)
+
+			context.addEllipse(in: centerSmolCircle)
+			context.setFillColor(seconds.color.cgColor)
+			context.fillPath()
         }
     }
     
