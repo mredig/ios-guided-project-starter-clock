@@ -192,15 +192,24 @@ class ClockView: UIView {
     
     @objc func timerFired(_ sender: CADisplayLink) {
         // Get current time
+		let date = Date()
         
         // Get calendar and set timezone
+		var calendar = Calendar.current
+		guard let timezone = timezone else { return }
+		calendar.timeZone = timezone
         
         // Extract hour, minute, second components from current time
-        
+		let timeComponents = calendar.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
+
         // Set above components to hours, minutes, seconds properties
+		hours.value = timeComponents.hour ?? 0
+		minutes.value = timeComponents.minute ?? 0
+		seconds.value = timeComponents.second ?? 0
         
         // Trigger a screen refresh
-        
+		setNeedsDisplay()
+//		setNeedsDisplay(CGRect(x: frame.midX, y: frame.origin.y, width: frame.size.width / 2, height: frame.size.height))
     }
     
     deinit {
